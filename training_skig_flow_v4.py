@@ -17,7 +17,7 @@ seq_len = 32
 batch_size = 8
 n_epoch = 1000
 learning_rate = 0.01
-decay_steps = 15000
+decay_steps = 4000
 decay_rate  = 0.1
 weight_decay= 0.00004
 print_freq = 20
@@ -25,7 +25,7 @@ queue_num = 5
 start_step = 0
 start_epoch = 0
 
-num_classes = 249
+num_classes = 10
 dataset_name = 'skig_flow'
 training_datalist = './dataset_splits/SKIG/training_flow_list1.txt'
 testing_datalist = './dataset_splits/SKIG/testing_flow_list1.txt'

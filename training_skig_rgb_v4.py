@@ -25,7 +25,7 @@ queue_num = 5
 start_step = 0
 start_epoch = 0
 
-num_classes = 249
+num_classes = 10
 dataset_name = 'skig_rgb'
 training_datalist = './dataset_splits/SKIG/training_rgb_list1.txt'
 testing_datalist = './dataset_splits/SKIG/testing_rgb_list1.txt'

@@ -22,8 +22,8 @@ decay_rate  = 0.1
 weight_decay= 0.00004
 print_freq = 20
 queue_num = 5
-start_step = 13440
-start_epoch = 3
+start_step = 0
+start_epoch = 0
 
 num_classes = 249
 dataset_name = 'isogr_rgb'

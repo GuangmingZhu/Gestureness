@@ -17,7 +17,7 @@ seq_len = 32
 batch_size = 8
 n_epoch = 1000
 learning_rate = 0.01
-decay_steps = 4000
+decay_steps = 15000
 decay_rate  = 0.1
 weight_decay= 0.00004
 print_freq = 20
@@ -25,10 +25,10 @@ queue_num = 5
 start_step = 0
 start_epoch = 0
 
-num_classes = 10
-dataset_name = 'skig_depth'
-training_datalist = './dataset_splits/SKIG/training_depth_list1.txt'
-testing_datalist = './dataset_splits/SKIG/testing_depth_list1.txt'
+num_classes = 249
+dataset_name = 'isogr_flow'
+training_datalist = './dataset_splits/IsoGD/train_flow_list.txt'
+testing_datalist = './dataset_splits/IsoGD/valid_flow_list.txt'
 model_prefix='/raid/gmzhu/tensorflow/gestureness3'
 
 curtime = '%s' % datetime.now()
@@ -69,7 +69,7 @@ l2_cost = tf.contrib.layers.l2_regularizer(weight_decay)(networks.all_params[0])
           tf.contrib.layers.l2_regularizer(weight_decay)(networks.all_params[28]) + \
           tf.contrib.layers.l2_regularizer(weight_decay)(networks.all_params[38]) + \
           tf.contrib.layers.l2_regularizer(weight_decay)(networks.all_params[44]) + \
-          tf.contrib.layers.l2_regularizer(weight_decay)(networks.all_params[50]) 
+          tf.contrib.layers.l2_regularizer(weight_decay)(networks.all_params[50])
 cost = networks_cost + l2_cost 
   
 # Decay the learning rate exponentially based on the number of steps.
@@ -111,7 +111,7 @@ if start_step>0:
   tl.files.assign_params(sess, load_params, networks)
   print 'load param from %s/%s_model_epoch_%d.npz'%(model_prefix, dataset_name, start_epoch)
 else:
-  pretrained_model = './trained_models/v4/isogr_depth_birnn_model.npz'
+  pretrained_model = './trained_models/v3/avgfusion/isogr_flow_birnn_model.npz'
   load_params = tl.files.load_npz(name=pretrained_model)
   tl.files.assign_params(sess, load_params[0:50], networks)
   print 'load param from %s'%(pretrained_model)
@@ -162,7 +162,7 @@ def training_data_read():
       image_info = zip(image_path,image_fcnt,image_olen,is_training)
       X_data_a[wr_pos*batch_size:(wr_pos+1)*batch_size,:,:,:,:] = \
                   tl.prepro.threading_data([_ for _ in image_info], 
-                                           data.prepare_skig_depth_data)
+                                           data.prepare_isogr_flow_data)
       y_label_a[wr_pos*batch_size:(wr_pos+1)*batch_size] = y_labels
       # 3. Update flags
       rdwr_lock.acquire()
@@ -259,7 +259,7 @@ for epoch in range(start_epoch, n_epoch):
       is_training.append(False) # Testing
     image_info = zip(image_path,image_fcnt,image_olen,is_training)
     X_data_t = tl.prepro.threading_data([_ for _ in image_info], 
-                                    data.prepare_skig_depth_data)
+                                    data.prepare_isogr_flow_data)
     feed_dict = {x: X_data_t, y: y_label_t, }
     dp_dict = tl.utils.dict_to_one(predictions.all_drop)
     feed_dict.update(dp_dict)
