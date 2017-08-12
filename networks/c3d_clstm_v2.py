@@ -2,9 +2,7 @@ import io
 import sys
 import numpy as np
 import tensorflow as tf
-slim = tf.contrib.slim
 import tensorlayer as tl
-from tensorflow.python.framework import ops
 import ConvLSTMCell as clstm
 
 def c3d_clstm(inputs, num_classes, reuse, is_training):
@@ -31,7 +29,7 @@ def c3d_clstm(inputs, num_classes, reuse, is_training):
                                         padding='SAME',
                                         pool = tf.nn.max_pool3d,
                                         name='Pool3D_1')
-      # 3DCNN-Incep Layer 2
+      # 3DCNN-BN Layer 2
       conv3d_2_3x3 = tl.layers.Conv3dLayer(pool3d_1, 
                                         act=tf.identity, 
                                         shape=[3,3,3,64,128], 
@@ -48,7 +46,7 @@ def c3d_clstm(inputs, num_classes, reuse, is_training):
                                         padding='SAME',
                                         pool = tf.nn.max_pool3d,
                                         name='Pool3D_2')
-      # 3DCNN-Resnet Layer 1
+      # 3DCNN-BN Layer 1
       conv3d_3a_3x3 = tl.layers.Conv3dLayer(pool3d_2, 
                                         act=tf.identity, 
                                         shape=[3,3,3,128,256],

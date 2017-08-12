@@ -2,9 +2,7 @@ import io
 import sys
 import numpy as np
 import tensorflow as tf
-slim = tf.contrib.slim
 import tensorlayer as tl
-from tensorflow.python.framework import ops
 import ConvLSTMCell as clstm
 
 def c3d_biclstm(inputs, num_classes, reuse, is_training):
@@ -165,10 +163,6 @@ def c3d_biclstm(inputs, num_classes, reuse, is_training):
                                         name='Flatten_1')
       classes = tl.layers.DropconnectDenseLayer(flatten_1, 
                                         keep=0.5,
-                                        n_units=4096,
-                                        act=tf.nn.relu,
-                                        name='Classes_ip')
-      classes = tl.layers.DenseLayer(classes, 
                                         n_units=num_classes,
                                         act=tf.identity,
                                         name='Classes')

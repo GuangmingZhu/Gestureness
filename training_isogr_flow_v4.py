@@ -111,7 +111,7 @@ if start_step>0:
   tl.files.assign_params(sess, load_params, networks)
   print 'load param from %s/%s_model_epoch_%d.npz'%(model_prefix, dataset_name, start_epoch)
 else:
-  pretrained_model = './trained_models/v3/avgfusion/isogr_flow_birnn_model.npz'
+  pretrained_model = './trained_models/v3/isogr_flow_birnn_model.npz'
   load_params = tl.files.load_npz(name=pretrained_model)
   tl.files.assign_params(sess, load_params[0:50], networks)
   print 'load param from %s'%(pretrained_model)
