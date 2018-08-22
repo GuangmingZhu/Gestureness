@@ -1,5 +1,7 @@
 # Gestureness 
+### (Please read the unpublished Manuscript.pdf for details)
 
+##
 ## Prerequisites
 
 1) Tensorflow-0.11 <br/>
